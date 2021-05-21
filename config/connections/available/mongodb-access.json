@@ -1,0 +1,10 @@
+{
+    "dbName": "access",
+    "connector": "mongodb",
+    "authDb": null,
+    "db": {
+        "user": null,
+        "pass": null,
+        "hosts": [{ "hostname": null, "port": null }]
+    }
+}
