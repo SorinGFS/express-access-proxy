@@ -192,8 +192,10 @@ ModelManifest.xml
 [Ss]nippets/*
 
 # keys symlinks
-config/**/enabled/*
+config/**/enabled/**
+!config/**/enabled/.gitkeep
 # inclusions
-config/**/includes/*
+config/**/includes/**
+!config/**/includes/.gitkeep
 # drafts folder
 zzz-drafts
