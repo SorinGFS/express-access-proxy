@@ -44,6 +44,9 @@
         "npm": ">=6.0.0"
     },
     "keywords": [
+        "jwt",
+        "access",
+        "proxy",
         "api",
         "auth",
         "framework",
