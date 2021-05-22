@@ -54,7 +54,7 @@ The application is designed in a maximum flexible way and allows granular contro
 1. [Environment Configuration](config/env)
 1. [Database Connection Configuration](config/connections)
 1. [Server Configuration](config/servers)
-    1. [Module Configuration](middlewares)
+    - [Module Configuration](middlewares)
         1. [Request Parsers](middlewares/request-parsers)
             1. [Cookie Parser](middlewares/request-parsers/cookie-parser)
             1. [Method Overwrite](middlewares/request-parsers/method-override)
