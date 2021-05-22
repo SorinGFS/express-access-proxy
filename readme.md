@@ -19,7 +19,8 @@ Access Proxy itself is just a transparent proxy. Install it first:
 
 ```shell
 cd /path/to/desired/location
-git clone https://github.com/SorinGFS/access-proxy.git && cd access-proxy
+git clone https://github.com/SorinGFS/access-proxy.git 
+cd access-proxy
 npm install
 ```
 
