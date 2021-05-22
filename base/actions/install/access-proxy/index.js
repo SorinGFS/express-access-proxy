@@ -20,7 +20,7 @@ program.parse(process.argv);
 const options = program.opts();
 
 const providerName = options.providerName;
-const provider = options.providerVersion ? `${providerName}@${options.providerVersion}` : providerName;
+const provider = options.providerVersion ? `${providerName}-access-proxy@${options.providerVersion}` : `${providerName}-access-proxy`;
 const pathResolveArgs = ['middlewares', 'proxy', providerName];
 const content = "'use strict';\n" + 
                 '// access-proxy plugin\n' + 
