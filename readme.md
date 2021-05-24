@@ -27,7 +27,7 @@ npm install
 Now, install the desired auth provider plugin, e.g Strapi:
 
 ```shell
-npm run action install express-access-proxy -- -p strapi
+npm run action install access-proxy -- -p strapi
 ```
 
 That's all. To start the configuration process run:
