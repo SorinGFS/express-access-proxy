@@ -1,4 +1,4 @@
-# Access Proxy
+# Express Access Proxy
 
 Access Management Reverse Proxy based on JWT.
 
@@ -15,19 +15,19 @@ It is a fact that access to internal applications can be much more easily contro
 
 ### Installation
 
-Access Proxy itself is just a transparent proxy. Install it first:
+Express Access Proxy itself is just a transparent proxy. Install it first:
 
 ```shell
 cd /path/to/desired/location
-git clone https://github.com/SorinGFS/access-proxy.git 
-cd access-proxy
+git clone https://github.com/SorinGFS/express-access-proxy.git 
+cd express-access-proxy
 npm install
 ```
 
 Now, install the desired auth provider plugin, e.g Strapi:
 
 ```shell
-npm run action install access-proxy -- -p strapi
+npm run action install express-access-proxy -- -p strapi
 ```
 
 That's all. To start the configuration process run:
