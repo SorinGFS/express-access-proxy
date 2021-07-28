@@ -3,8 +3,7 @@
 const fn = require('../functions');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
-const permissions = require('../connections')({ dbName: 'access', collection: 'permissions' });
-const Permissions = require('../model')(permissions);
+const Permissions = require('../model')('access.permissions');
 
 class Server {
     constructor(configServer) {
@@ -58,6 +57,8 @@ class Server {
             const expiresAtSeconds = req.server.auth.mode === 'refreshTokens' ? req.server.auth.refreshInSeconds : req.server.auth.maxInactivitySeconds;
             const update = { token: providerToken, issuedAt: new Date(), expiresAt: new Date(Date.now() + expiresAtSeconds * 1000) };
             if (req.server.auth.mode === 'refreshTokens') update.refresh = fn.generateUUID();
+            console.log(await Permissions.getIndexes());
+            // console.log(await Permissions.createIndex({csrs:1}));
             Permissions.upsertOne(filter, update);
             return { jwt: this.auth.jwt.sign(payload), refresh: update.refresh };
         };
