@@ -6,57 +6,85 @@ const DB = require('../../db');
 class Model extends DB {
     constructor(connection) {
         super(connection);
+        this.collection = connection.namespace.split('.')[1];
     }
     async close() {
         await this.client.close();
     }
-    async findByID(id, callback) {
-        return await this.db.collection(this.connection.collection).findOne({ _id: new this.ObjectID(id) }, callback);
+    async command(command, options, callback) {
+        return await this.db.command({ ...command }, { ...options }, callback);
     }
-    async findOne(filter, callback) {
-        return await this.db.collection(this.connection.collection).findOne({ ...filter }, callback);
+    async setOptions(collectionOptions, options, callback) {
+        const command = { collMod: this.collection, ...collectionOptions };
+        return await this.db.command({ ...command }, { ...options }, callback);
     }
-    async findAll(callback) {
-        return await this.db.collection(this.connection.collection).find({}).toArray(callback);
+    async indexes() {
+        return await this.db.command({ listIndexes: this.collection }).then((result) => result.cursor.firstBatch);
     }
-    async countAll(callback) {
-        return await this.db.collection(this.connection.collection).countDocuments({}, callback);
+    async createIndex(keys, options, commitQuorum) {
+        return await this.db.collection(this.collection).createIndex({ ...keys }, { ...options }, commitQuorum);
+    }
+    async dropIndex(index) {
+        return await this.db.collection(this.collection).dropIndex(index);
+    }
+    async validation() {
+        const collection = await this.db.listCollections({ name: this.collection }).toArray();
+        return { validator: collection[0].options.validator, validationLevel: collection[0].options.validationLevel, validationAction: collection[0].options.validationAction };
+    }
+    async info() {
+        const collection = await this.db.listCollections({ name: this.collection }).toArray();
+        return { info: collection[0].info };
     }
     async count(filter, callback) {
-        return await this.db.collection(this.connection.collection).countDocuments({ ...filter }, callback);
+        return await this.db.collection(this.collection).countDocuments({ ...filter }, callback);
+    }
+    async find(filter, options, callback) {
+        return await this.db
+            .collection(this.collection)
+            .find({ ...filter }, { ...options }, callback)
+            .toArray();
+    }
+    async findByID(id, callback) {
+        return await this.db.collection(this.collection).findOne({ _id: new this.ObjectID(id) }, callback);
+    }
+    async findOne(filter, callback) {
+        return await this.db.collection(this.collection).findOne({ ...filter }, callback);
+    }
+    async insert(documents, options, callback) {
+        return await this.db.collection(this.collection).insertMany([...documents], { ...options }, callback);
     }
     async insertByID(id, item, callback) {
-        return await this.db.collection(this.connection.collection).insertOne({ _id: new this.ObjectID(id), ...item }, callback);
+        return await this.db.collection(this.collection).insertOne({ _id: new this.ObjectID(id), ...item }, callback);
     }
     async insertOne(item, callback) {
-        return await this.db.collection(this.connection.collection).insertOne({ ...item }, callback);
+        return await this.db.collection(this.collection).insertOne({ ...item }, callback);
     }
     async delete(filter, callback) {
-        return await this.db.collection(this.connection.collection).deleteMany({ ...filter }, callback);
+        return await this.db.collection(this.collection).deleteMany({ ...filter }, callback);
     }
     async deleteByID(id, callback) {
-        return await this.db.collection(this.connection.collection).deleteOne({ _id: new this.ObjectID(id) }, callback);
+        return await this.db.collection(this.collection).deleteOne({ _id: new this.ObjectID(id) }, callback);
     }
     async deleteOne(filter, callback) {
-        return await this.db.collection(this.connection.collection).deleteOne({ ...filter }, callback);
+        return await this.db.collection(this.collection).deleteOne({ ...filter }, callback);
     }
     async update(filter, update, callback) {
-        return await this.db.collection(this.connection.collection).updateMany({ ...filter }, { $set: { ...update } }, callback);
+        return await this.db.collection(this.collection).updateMany({ ...filter }, { $set: { ...update } }, callback);
     }
     async updateByID(id, update, callback) {
-        return await this.db.collection(this.connection.collection).updateOne({ _id: new this.ObjectID(id) }, { $set: { ...update } }, callback);
+        return await this.db.collection(this.collection).updateOne({ _id: new this.ObjectID(id) }, { $set: { ...update } }, callback);
     }
     async updateOne(filter, update, callback) {
-        return await this.db.collection(this.connection.collection).updateOne({ ...filter }, { $set: { ...update } }, callback);
+        return await this.db.collection(this.collection).updateOne({ ...filter }, { $set: { ...update } }, callback);
     }
     async upsert(filter, update, callback) {
-        return await this.db.collection(this.connection.collection).updateMany({ ...filter }, { $set: { ...update } }, { upsert: true }, callback);
+        return await this.db.collection(this.collection).updateMany({ ...filter }, { $set: { ...update } }, { upsert: true }, callback);
     }
     async upsertByID(id, update, callback) {
-        return await this.db.collection(this.connection.collection).findOneAndUpdate({ _id: new this.ObjectID(id) }, { $set: { ...update } }, { upsert: true }, callback);
+        return await this.db.collection(this.collection).findOneAndUpdate({ _id: new this.ObjectID(id) }, { $set: { ...update } }, { upsert: true }, callback);
     }
     async upsertOne(filter, update, callback) {
-        return await this.db.collection(this.connection.collection).findOneAndUpdate({ ...filter }, { $set: { ...update } }, { upsert: true }, callback);
+        return await this.db.collection(this.collection).findOneAndUpdate({ ...filter }, { $set: { ...update } }, { upsert: true }, callback);
     }
 }
 
