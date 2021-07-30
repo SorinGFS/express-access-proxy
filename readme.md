@@ -1,6 +1,6 @@
 # Express Access Proxy
 
-Access Management Reverse Proxy based on JWT.
+Access Management Reverse Proxy based on JWT.dev
 
 ### Motivation
 
