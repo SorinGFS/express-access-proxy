@@ -8,7 +8,7 @@ It is a fact that access to internal applications can be much more easily contro
 
 ### Requirements
 
-    * node: >=10.0.0
+    * node: >=12.19.0
     * npm: >=6.0.0
     * mongoDB >=2.6
     * downstream server Nginx, Apache, or whatever, to proxy connections to this host (default `localhost:7331` for production, `localhost:3002` for development)
