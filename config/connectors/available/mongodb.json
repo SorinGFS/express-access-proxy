@@ -1,8 +1,6 @@
 {
     "connector": "mongodb",
     "options": {
-        "useNewUrlParser": true,
-        "useUnifiedTopology": true,
         "retryWrites": true,
         "writeConcern": { "w": "majority" }
     }
