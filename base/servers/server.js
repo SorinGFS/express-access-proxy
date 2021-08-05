@@ -57,8 +57,6 @@ class Server {
             const expiresAtSeconds = req.server.auth.mode === 'refreshTokens' ? req.server.auth.refreshInSeconds : req.server.auth.maxInactivitySeconds;
             const update = { token: providerToken, issuedAt: new Date(), expiresAt: new Date(Date.now() + expiresAtSeconds * 1000) };
             if (req.server.auth.mode === 'refreshTokens') update.refresh = fn.generateUUID();
-            console.log(await Permissions.getIndexes());
-            // console.log(await Permissions.createIndex({csrs:1}));
             Permissions.upsertOne(filter, update);
             return { jwt: this.auth.jwt.sign(payload), refresh: update.refresh };
         };
