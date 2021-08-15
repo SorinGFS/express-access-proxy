@@ -34,6 +34,10 @@ Each connection must be configured in a separate file located in the `available`
             {"...": "..."},
             { "hostname": "domain-N.tld", "port": 1234 }
         ]
+    },
+    "options": {
+        "retryWrites": true,
+        "writeConcern": { "w": "majority" }
     }
 }
 ```

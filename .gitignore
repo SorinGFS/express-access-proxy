@@ -199,3 +199,6 @@ config/**/includes/**
 !config/**/includes/.gitkeep
 # drafts folder
 zzz-drafts
+# temporary ignore
+lan-to-mongodb.json
+router/routes/api/*

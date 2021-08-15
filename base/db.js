@@ -3,7 +3,6 @@
 class DB {
     constructor(connection) {
         this.connection = connection;
-        this.connect();
     }
     async connect() {
         await require(`./connectors/${this.connection.connector}`)(this.connection).then((connected) => Object.assign(this, connected));

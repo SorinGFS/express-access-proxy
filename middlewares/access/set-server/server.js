@@ -1,7 +1,9 @@
 'use strict';
 // set req server to be used in middlewares
 const fn = require('../../../base/functions');
-const servers = require('../../../base/servers');
+const filter = () => true; // filter all
+const configs = require('../../../config/servers')(filter);
+const servers = require('../../../base/servers')(configs);
 
 function setServer(req, res, next) {
     req.performer = 'setServer';

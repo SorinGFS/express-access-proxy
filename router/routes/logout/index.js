@@ -1,6 +1,5 @@
 'use strict';
-// http://expressjs.com/en/4x/api.html#router.route
-const router = require('express').Router();
+// logout
 const createError = require('http-errors');
 
 function logout(req, res, next) {
@@ -16,6 +15,4 @@ function logout(req, res, next) {
     return next(createError.BadRequest());
 }
 
-router.all('/logout', logout);
-
-module.exports = router;
+module.exports = logout;

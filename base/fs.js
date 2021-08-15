@@ -104,7 +104,7 @@ module.exports = {
         }
     },
     removeDir: function (...pathResolveArgs) {
-        fs.rmdir(path.resolve(...pathResolveArgs), { recursive: true }, (error) => {
+        fs.rm(path.resolve(...pathResolveArgs), { recursive: true }, (error) => {
             if (error) {
                 console.log(error);
             }

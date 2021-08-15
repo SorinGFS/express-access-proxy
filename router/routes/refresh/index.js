@@ -20,6 +20,6 @@ async function refresh(req, res, next) {
     return next(createError.BadRequest());
 }
 
-router.post('/refresh', parseJson, refresh);
+router.use(parseJson, refresh);
 
 module.exports = router;

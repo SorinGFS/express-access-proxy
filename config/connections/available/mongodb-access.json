@@ -6,5 +6,9 @@
         "user": null,
         "pass": null,
         "hosts": [{ "hostname": null, "port": null }]
+    },
+    "options": {
+        "retryWrites": true,
+        "writeConcern": { "w": "majority" }
     }
 }
