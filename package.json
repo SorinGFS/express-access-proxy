@@ -1,6 +1,6 @@
 {
     "name": "express-access-proxy",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Access Management Reverse Proxy based on JWT.",
     "main": "app.js",
     "scripts": {
@@ -30,7 +30,7 @@
         "jsonwebtoken": "^8.5.1",
         "method-override": "^3.0.0",
         "mobile-detect": "^1.4.5",
-        "mongodb": "^4.0.1",
+        "mongodb": "^4.1.0",
         "volleyball": "^1.5.1"
     },
     "devDependencies": {
