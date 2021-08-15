@@ -1,7 +1,0 @@
-{
-    "connector": "mongodb",
-    "options": {
-        "retryWrites": true,
-        "writeConcern": { "w": "majority" }
-    }
-}

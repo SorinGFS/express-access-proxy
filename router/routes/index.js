@@ -3,9 +3,6 @@
 const router = require('express').Router();
 const fs = require('../../base/fs');
 
-const routes = [];
-fs.dirs(__dirname).forEach((route) => routes.push(require(`./${route}`)));
-
-router.use(...routes);
+fs.dirs(__dirname).forEach((route) => router.use(`/${route}`, require(`./${route}`)));
 
 module.exports = router;

@@ -144,7 +144,7 @@ module.exports = {
     microtime: (getAsFloat) => {
         var s, now, multiplier;
         if (typeof performance !== 'undefined' && performance.now) {
-            now = (performance.now() + performance.timing.navigationStart) / 1000;
+            now = performance.now() / 1000;
             multiplier = 1e6; // 1,000,000 for microseconds
         } else {
             now = Date.now ? Date.now() / 1000 : Math.floor(new Date().getTime() / 1000.0);
