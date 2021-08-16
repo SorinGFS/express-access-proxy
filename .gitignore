@@ -201,4 +201,5 @@ config/**/includes/**
 zzz-drafts
 # temporary ignore
 lan-to-mongodb.json
+mongodb-blog.json
 router/routes/api/*
