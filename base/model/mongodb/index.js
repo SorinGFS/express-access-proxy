@@ -81,18 +81,6 @@ class Model extends DB {
         if (!this.isConnected) await this.init();
         return await this.db.collection(this.collection).insertOne({ ...item });
     }
-    async delete(filter) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteMany({ ...filter });
-    }
-    async deleteByID(id) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteOne({ _id: new this.ObjectId(id) });
-    }
-    async deleteOne(filter) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteOne({ ...filter });
-    }
     async update(filter, update) {
         if (!this.isConnected) await this.init();
         return await this.db.collection(this.collection).updateMany({ ...filter }, { $set: { ...update } });
@@ -116,6 +104,18 @@ class Model extends DB {
     async upsertOne(filter, update) {
         if (!this.isConnected) await this.init();
         return await this.db.collection(this.collection).findOneAndUpdate({ ...filter }, { $set: { ...update } }, { upsert: true });
+    }
+    async delete(filter) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection(this.collection).deleteMany({ ...filter });
+    }
+    async deleteByID(id) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection(this.collection).deleteOne({ _id: new this.ObjectId(id) });
+    }
+    async deleteOne(filter) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection(this.collection).deleteOne({ ...filter });
     }
 }
 
