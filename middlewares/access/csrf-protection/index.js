@@ -6,9 +6,10 @@ const csurf = require('./csurf');
 
 const useCsrfProtection = (req, res, next) => {
     if (req.server.csrfProtection) {
-        router.use(csurf);
+        csurf(req, res, next);
+    } else {
+        next();
     }
-    next();
 };
 
 router.use(useCsrfProtection);
