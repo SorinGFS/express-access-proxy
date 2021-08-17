@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 const requestParsers = require('../middlewares/request-parsers');
 const spamProtection = require('../middlewares/spam-protection');
-const routes = require('../router/routes');
+const routes = require('./routes');
 const access = require('../middlewares/access');
 const proxy = require('../middlewares/proxy');
 const handleError = require('../middlewares/http-errors');
