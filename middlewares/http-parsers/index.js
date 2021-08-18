@@ -2,8 +2,9 @@
 // http://expressjs.com/en/4x/api.html#router.route
 const router = require('express').Router();
 
-const methodOverride = require('method-override');
-// method override
-router.use(methodOverride('method'));
+const httpLogger = require('./volleyball');
+const cookieParser = require('./cookie-parser');
+
+router.use(httpLogger, cookieParser)
 
 module.exports = router;
