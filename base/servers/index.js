@@ -17,10 +17,10 @@ module.exports = (serverConfigs) => {
             }
             auth = {};
             if (putItBack !== undefined) auth.mode = putItBack;
-            return [auth];
+            return [{ auth: auth }];
         }
         if (config.server.locations) {
-            fn.parseDeep(config.server.locations, 'auth', locationAuthCleanup);
+            fn.parseDeepKey(config.server.locations, 'auth', locationAuthCleanup);
         }
         // analize each auth and update jwt according given settings
         function setAuth(auth) {
@@ -99,9 +99,9 @@ module.exports = (serverConfigs) => {
                     auth.jwt.verifyOptions.nonce = auth.nonce;
                 }
             }
-            return [auth];
+            return [{ auth: auth }];
         }
-        fn.parseDeep(config.server, 'auth', setAuth);
+        fn.parseDeepKey(config.server, 'auth', setAuth);
         preparedServers.push({ serverName: config.serverName, server: config.server });
     });
     // serializing serverName

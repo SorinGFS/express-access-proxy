@@ -14,6 +14,7 @@ console.log(req.headers);
 console.log(req.secret);
 console.log(req.signedCookies);
 console.log(req.cookies);
+console.log(req.body);
 console.log(req.ip);
 console.log(req.ips); // x-forwarded-for, req.ips[0] is the actual client
 console.log(req.originalMethod);
@@ -22,9 +23,12 @@ console.log(req.path);
 console.log(req.query);
 console.log(req.baseUrl); // mounted path
 console.log(req.params); // relative to mounted path
+console.log(req.url); // not a native Express property, it is inherited from Node, used in urlRewrite
+console.log(req.route);
 // ========= project specific vars =========
-console.log(req.server);
+console.log(req.server); // set by setServer
 console.log(req.device);
+console.log(req.single); // used in API
 ```
 
 However, this method has 2 problems:

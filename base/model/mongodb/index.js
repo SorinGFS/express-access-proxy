@@ -1,11 +1,14 @@
 'use strict';
 // model is connector specific, custom model is extending base model and is dbName specific
 const DB = require('../../db');
+const jsonSchema = require('./json-schema');
+const orm = require('./orm');
 
 // Many methods in the MongoDB driver will return a promise if the caller doesn't pass a callback function.
 class Model extends DB {
     constructor(connection) {
         super(connection);
+        Object.assign(this, jsonSchema, { orm });
         this.isConnected = false;
         this.collection = connection.namespace.split('.')[1];
     }
@@ -13,6 +16,7 @@ class Model extends DB {
         if (!this.isConnected) {
             await this.connect()
                 .then(() => (this.db = this.client.db(this.dbName)))
+                .then(() => (this.db.collection = this.db.collection(this.collection)))
                 .then(() => (this.isConnected = true));
         }
     }
@@ -23,10 +27,10 @@ class Model extends DB {
         if (!this.isConnected) await this.init();
         return await this.db.command({ ...command }, { ...options });
     }
-    async setOptions(collectionOptions, options) {
+    async setCollectionOptions(collectionOptions, commandOptions) {
         if (!this.isConnected) await this.init();
         const command = { collMod: this.collection, ...collectionOptions };
-        return await this.db.command({ ...command }, { ...options });
+        return await this.db.command({ ...command }, { ...commandOptions });
     }
     async indexes() {
         if (!this.isConnected) await this.init();
@@ -34,16 +38,20 @@ class Model extends DB {
     }
     async createIndex(keys, options, commitQuorum) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).createIndex({ ...keys }, { ...options }, commitQuorum);
+        return await this.db.collection.createIndex({ ...keys }, { ...options }, commitQuorum);
     }
     async dropIndex(index) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).dropIndex(index);
+        return await this.db.collection.dropIndex(index);
     }
     async validation() {
         if (!this.isConnected) await this.init();
         const collection = await this.db.listCollections({ name: this.collection }).toArray();
         return { validator: collection[0].options.validator, validationLevel: collection[0].options.validationLevel, validationAction: collection[0].options.validationAction };
+    }
+    async setValidation(validation, commandOptions) {
+        if (!this.isConnected) await this.init();
+        return await this.setCollectionOptions({ ...validation }, { ...commandOptions });
     }
     async info() {
         if (!this.isConnected) await this.init();
@@ -52,70 +60,69 @@ class Model extends DB {
     }
     async count(filter) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).countDocuments({ ...filter });
+        return { matchedCount: await this.db.collection.countDocuments({ ...filter }) };
+    }
+    async distinct(key, filter, commandOptions) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection.distinct(key, { ...filter }, { ...commandOptions });
+    }
+    async aggregate(pipeline, options) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection.aggregate([...pipeline], { ...options });
+    }
+    async bulkWrite(operations, options) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection.bulkWrite([...operations], { ...options });
+    }
+    async watch(pipeline, options) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection.watch([...pipeline], { ...options });
+    }
+    async findOne(filter, options) {
+        if (!this.isConnected) await this.init();
+        return await this.db.collection.findOne({ ...filter }, { ...options });
     }
     async find(filter, options) {
         if (!this.isConnected) await this.init();
-        return await this.db
-            .collection(this.collection)
-            .find({ ...filter }, { ...options })
-            .toArray();
+        return await this.db.collection.find({ ...filter }, { ...options });
     }
-    async findByID(id) {
+    async insertOne(document, options) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).findOne({ _id: new this.ObjectId(id) });
+        return await this.db.collection.insertOne({ ...document }, { ...options });
     }
-    async findOne(filter) {
+    async insertMany(documents, options) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).findOne({ ...filter });
+        return await this.db.collection.insertMany([...documents], { ...options });
     }
-    async insert(documents, options) {
+    async updateOne(filter, update, options) {
+        if (options) delete options.upsert;
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).insertMany([...documents], { ...options });
+        return await this.db.collection.updateOne({ ...filter }, { $set: { ...update } }, { ...options });
     }
-    async insertByID(id, item) {
+    async updateMany(filter, update, options) {
+        if (options) delete options.upsert;
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).insertOne({ _id: new this.ObjectId(id), ...item });
+        return await this.db.collection.updateMany({ ...filter }, { $set: { ...update } }, { ...options });
     }
-    async insertOne(item) {
+    async upsertOne(filter, update, options) {
+        if (options) delete options.upsert;
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).insertOne({ ...item });
+        return await this.db.collection.updateOne({ ...filter }, { $set: { ...update } }, { upsert: true, ...options });
     }
-    async update(filter, update) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).updateMany({ ...filter }, { $set: { ...update } });
+    async upsertMany(operations) {
+        const operation = (args) => ({ updateMany: { filter: args[0], update: { $set: args[1] }, upsert: true } });
+        for (let i = 0; i < operations.length; i++) {
+            operations[i] = operation(operations[i]);
+        }
+        return await this.bulkWrite(operations);
     }
-    async updateByID(id, update) {
+    async deleteOne(filter, options) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).updateOne({ _id: new this.ObjectId(id) }, { $set: { ...update } });
+        return await this.db.collection.deleteOne({ ...filter }, { ...options });
     }
-    async updateOne(filter, update) {
+    async deleteMany(filter, options) {
         if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).updateOne({ ...filter }, { $set: { ...update } });
-    }
-    async upsert(filter, update) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).updateMany({ ...filter }, { $set: { ...update } }, { upsert: true });
-    }
-    async upsertByID(id, update) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).findOneAndUpdate({ _id: new this.ObjectId(id) }, { $set: { ...update } }, { upsert: true });
-    }
-    async upsertOne(filter, update) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).findOneAndUpdate({ ...filter }, { $set: { ...update } }, { upsert: true });
-    }
-    async delete(filter) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteMany({ ...filter });
-    }
-    async deleteByID(id) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteOne({ _id: new this.ObjectId(id) });
-    }
-    async deleteOne(filter) {
-        if (!this.isConnected) await this.init();
-        return await this.db.collection(this.collection).deleteOne({ ...filter });
+        return await this.db.collection.deleteMany({ ...filter }, { ...options });
     }
 }
 
