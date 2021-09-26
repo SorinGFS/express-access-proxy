@@ -8,7 +8,7 @@ const consoleLogger = require('../../dev-tools/console-logger');
 // sets req user if authorization header is present and valid
 async function setUser(req, res, next) {
     req.performer = 'setUser';
-    if (req.server.auth.mode && req.headers.authorization) {
+    if (req.server.auth && req.server.auth.mode && req.headers.authorization) {
         // reject if tries relogin
         if (/\/auth/.test(req.path)) {
             return res.status(304).end();

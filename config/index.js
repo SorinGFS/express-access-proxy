@@ -21,7 +21,7 @@ module.exports = (workdir, filter) => {
     };
     let configs = [];
     links.forEach((config) => configs.push(require(fs.pathResolve(workdir, 'enabled', config))));
-    configs = fn.replaceDeep(configs, 'include', sources);
+    fn.replaceDeep(configs, 'include', sources);
     const filtered = configs.filter((config) => {
         return filter(config);
     });

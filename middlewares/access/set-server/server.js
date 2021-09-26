@@ -20,6 +20,13 @@ function setServer(req, res, next) {
             });
         });
     }
+    // get db connection
+    if (req.server.auth && req.server.auth.mode) {
+        const connection = require('../../../config/connections')((config) => config.dbName === 'access')[0];
+        if (!connection) throw new Error(`Error: <access> db connection config not found!`);
+        connection.namespace = 'access.permissions';
+        req.server.Permissions = require('../../../base/model')(connection);
+    }
     next();
 }
 
