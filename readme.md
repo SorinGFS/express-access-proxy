@@ -73,7 +73,6 @@ The application is designed in a maximum flexible way and allows granular contro
             1. [Method Overwrite](middlewares/body-parsers/method-override)
             1. [Parse Form](middlewares/body-parsers/parse-form)
             1. [Parse Json](middlewares/body-parsers/parse-json)
-            1. [Parse Bson](middlewares/body-parsers/parse-bson)
             1. [Parse Text](middlewares/body-parsers/parse-text)
         1. [Router](router)
             1. [Routes](router/routes)
