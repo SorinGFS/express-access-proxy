@@ -30,6 +30,15 @@ Now, install the desired auth provider plugin, e.g Strapi:
 npm run action install access-proxy -- -p strapi
 ```
 
+<details>
+<summary>Remove an installed plugin: <em>(Click to expand)</em></summary>
+
+```shell
+npm run action uninstall access-proxy -- -p strapi
+```
+
+</details>
+
 That's all. To start the configuration process run:
 
 ```shell
@@ -54,36 +63,35 @@ The application is designed in a maximum flexible way and allows granular contro
 1. [Environment Configuration](config/env)
 1. [Database Connection Configuration](config/connections)
 1. [Server Configuration](config/servers)
-    - [Module Configuration](middlewares)
-        1. [Http Parsers](middlewares/http-parsers)
-            1. [Cookie Parser](middlewares/http-parsers/cookie-parser)
-            1. [Http Logger](middlewares/http-parsers/volleyball)
-        1. [Access](middlewares/access)
-            1. [Set Server](middlewares/access/set-server)
-            1. [Set Device (mobile-detect)](middlewares/access/mobile-detect)
-            1. [CSRF Protection](middlewares/access/csrf-protection)
-            1. [Fingerprint](middlewares/access/fingerprint)
-            1. [Set User (authentication using JWT and permissions)](middlewares/access/set-user)
-            1. [Access Control](middlewares/access/access-control)
-            1. [Access Logs](middlewares/access/access-logs)
-        1. [Spam Protection](middlewares/spam-protection)
-            1. [Rate Limit](middlewares/spam-protection/rate-limit)
-            1. [Slow Down (DDOS protection)](middlewares/spam-protection/slow-down)
-        1. [Body Parsers](middlewares/body-parsers)
-            1. [Method Overwrite](middlewares/body-parsers/method-override)
-            1. [Parse Form](middlewares/body-parsers/parse-form)
-            1. [Parse Json](middlewares/body-parsers/parse-json)
-            1. [Parse Text](middlewares/body-parsers/parse-text)
-        1. [Router](router)
-            1. [Routes](router/routes)
-                1. [Logout](router/routes/logout)
-                1. [Refresh](router/routes/refresh)
-        1. [Dev Tools](middlewares/dev-tools)
-            1. [Console Logger](middlewares/dev-tools/console-logger)
-            1. [Performance Timer](middlewares/dev-tools/performance-timer)
-        1. [Proxy](middlewares/proxy)
-            1. [Local](middlewares/proxy/local)
-            1. [Available Plugins](middlewares/proxy#plugins)
+    1. [Server](server)
+        1. [Middlewares](server/middlewares)
+            1. [Http Parsers](server/middlewares/http-parsers)
+                1. [Cookie Parser](server/middlewares/http-parsers/cookie-parser)
+                1. [Http Logger](server/middlewares/http-parsers/volleyball)
+            1. [Access](server/middlewares/access)
+                1. [Set Device (mobile-detect)](server/middlewares/access/mobile-detect)
+                1. [CSRF Protection](server/middlewares/access/csrf-protection)
+                1. [Fingerprint](server/middlewares/access/fingerprint)
+                1. [Set User (authentication using JWT and permissions)](server/middlewares/access/set-user)
+                1. [Access Control](server/middlewares/access/access-control)
+                1. [Access Logs](server/middlewares/access/access-logs)
+            1. [Spam Protection](server/middlewares/spam-protection)
+                1. [Rate Limit](server/middlewares/spam-protection/rate-limit)
+                1. [Slow Down (DDOS protection)](server/middlewares/spam-protection/slow-down)
+            1. [Body Parsers](server/middlewares/body-parsers)
+                1. [Method Overwrite](server/middlewares/body-parsers/method-override)
+                1. [Parse Form](server/middlewares/body-parsers/parse-form)
+                1. [Parse Json](server/middlewares/body-parsers/parse-json)
+                1. [Parse Text](server/middlewares/body-parsers/parse-text)
+            1. [Dev Tools](server/middlewares/dev-tools)
+                1. [Console Logger](server/middlewares/dev-tools/console-logger)
+                1. [Performance Timer](server/middlewares/dev-tools/performance-timer)
+        1. [Routes](server/routes)
+            1. [Logout](server/routes/logout)
+            1. [Refresh](server/routes/refresh)
+        1. [Proxy](server/middlewares/proxy)
+            1. [Local](server/middlewares/proxy/local)
+            1. [Available Plugins](server/middlewares/proxy#plugins)
                 1. [Strapi](https://github.com/SorinGFS/strapi-access-proxy#strapi-access-proxy)
 
 **Important:** Some modules are built-in or work only in a certain environment. For the rest of them there is one rule:

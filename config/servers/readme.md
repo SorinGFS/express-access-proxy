@@ -1,4 +1,4 @@
-[Back to Main Page](https://github.com/SorinGFS/access-proxy#configuration)
+[Back to Main Page](https://github.com/SorinGFS/express-access-proxy#configuration)
 
 ### Server Configuration
 
@@ -10,7 +10,7 @@ Each level is controlled through modules, individual or grouped and which can be
 
 Each module (middleware) has its own properties that can be found in its own configuration documentation.
 
-The selection of the server at runtime is based on the `serverName` which must contain `req.hostname`.
+The configurations of all servers are processed on load, stored in memory, and then dinamically selected according to the request. The selection of the server at runtime is based on the `serverName` which must contain `req.hostname`. The configuration of each server is made up practically on the basis of the modules configured in it and is located in the file `config/servers/available/*.json`.
 
 #### Access Basics
 
@@ -53,6 +53,33 @@ Servers can be configured for any of the following cases:
 }
 ```
 
+#### App Settings
+
+`Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). Example configuration:
+
+**File:** `config/servers/available/my-custom-server.json`
+
+```json
+{
+    "serverName": "domain-or-ip",
+    "server": {
+        "appSettings": { "trust proxy": true },
+        "...": { "...": "..." },
+        "locations": [
+            {
+                "^/route": {
+                    "appSettings": {
+                        "query parser": false,
+                        "etag": "strong"
+                    },
+                    "...": { "...": "..." }
+                }
+            }
+        ]
+    }
+}
+```
+
 #### Server Name
 
 As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
@@ -71,7 +98,7 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 
 #### Including entire files in config
 
-Included files must exist in `config/servers/includes/**` directory no matter how deep. The files will be included based on directives inside server configs in the specified position. They can be included anywhere, but in such a way that after inclusion the resulting configuration should be valid. Included files may also contain `include` directive. Here some examples about including files:
+Each server config may also include another files located in `config/servers/includes/**/*.json` and referred inside config at any level by the `include` directive. Included files must exist in `config/servers/includes/**` directory no matter how deep. The files will be included based on directives inside server configs in the specified position. They can be included anywhere, but in such a way that after inclusion the resulting configuration should be valid. Included files may also contain `include` directive. Here some examples about including files:
 
 **File:** `config/servers/available/my-server.json`
 
@@ -81,21 +108,19 @@ Included files must exist in `config/servers/includes/**` directory no matter ho
     "include": "includes/keys/my-server.json",
     "server": {
         "proxyPass": "localhost:1337",
-        "include": [
-            "includes/access/my-server.json", 
-            "includes/locations/my-server.json", 
-            "includes/dev-tools/my-server.json"
-        ]
+        "include": ["includes/access/my-server.json", "includes/locations/my-server.json", "includes/dev-tools/my-server.json"]
     }
 }
 ```
-**Important:** 
-- on same level key similarity the later wins
-- on different level key similarity the deeper level wins
-- all included files must be `json` formatted as `array` of at least one `object`: `[{...}]`
-- `serverName` directive can be a `string` for one name, or `array` for single or multiple names.
-- `include` directive can be a `string` for one file, or `array` for single or multiple files.
-- always inspect resulted config in console!
+
+**Important:**
+
+-   on same level key similarity the later wins
+-   on different level key similarity the deeper level wins
+-   all included files must be `json` formatted as `array` of at least one `object`: `[{...}]`
+-   `serverName` directive can be a `string` for one name, or `array` for single or multiple names.
+-   `include` directive can be a `string` for one file, or `array` for single or multiple files.
+-   always inspect resulted config in console!
 
 ---
 

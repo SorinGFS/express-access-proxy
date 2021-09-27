@@ -1,12 +1,12 @@
 {
     "name": "express-access-proxy",
-    "version": "1.1.5",
+    "version": "1.2.0",
     "description": "Access Management Reverse Proxy based on JWT.",
     "main": "app.js",
     "scripts": {
         "start": "cross-env NODE_ENV=production node app",
         "dev": "cross-env NODE_ENV=development nodemon app",
-        "action": "node base/actions"
+        "action": "node actions"
     },
     "author": {
         "name": "SorinGFS",
