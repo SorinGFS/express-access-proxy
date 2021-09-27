@@ -1,4 +1,4 @@
-[Back to Main Page](https://github.com/SorinGFS/access-proxy#configuration)
+[Back to Main Page](https://github.com/SorinGFS/express-access-proxy#configuration)
 
 ### Adjust Env Vars
 

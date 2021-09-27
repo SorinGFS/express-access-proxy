@@ -1,4 +1,4 @@
-[Back to Main Page](https://github.com/SorinGFS/strapi-access-proxy#strapi-access-proxy)
+[Back to Main Page](https://github.com/SorinGFS/express-access-proxy#configuration)
 
 ### Dynamic Model
 
