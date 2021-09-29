@@ -3,7 +3,7 @@
 const router = require('express').Router();
 const createError = require('http-errors');
 const pluralize = require('pluralize');
-const fn = require('../../../base/functions');
+const fn = require('express-access-proxy-base/fn');
 
 // syntax: [regex, replacement, flags?]
 const urlRewrite = (req, res, next) => {
@@ -116,7 +116,7 @@ const setModel = (req, res, next) => {
     if (!connection) throw new Error(`Error: <${req.locals.dbName}> db connection config not found!`);
     // in api controller is db table or collection
     connection.namespace = `${req.locals.dbName}.${req.locals.controller}`;
-    req.Model = require('../../../base/model')(connection);
+    req.Model = require('express-access-proxy-base/db/model')(connection);
     next();
 };
 

@@ -2,16 +2,16 @@
 // set req server to be used in middlewares
 const env = require('./config/env');
 const app = require('express')();
-const server = require('./server');
-const fn = require('./base/functions');
+const fn = require('express-access-proxy-base/fn');
 const filter = () => true; // filter all
 const configs = require('./config/servers')(filter);
-const servers = require('./base/servers')(configs);
+const servers = require('express-access-proxy-base/servers')(configs);
+const server = require('./server');
 // set port
 const PORT = process.env.PORT || 7331;
 // app listen
 app.listen(PORT, console.log(`App running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`));
-
+// select server based on request hostname and paste it to the request
 function setServer(req, res, next) {
     // using the serialized serverName in base servers
     req.server = servers[Object.keys(servers).filter((name) => new RegExp(fn.btoa(`<${req.hostname}>`)).test(name))[0]];
@@ -37,7 +37,7 @@ function setServer(req, res, next) {
         const connection = require('./config/connections')((config) => config.dbName === 'access')[0];
         if (!connection) throw new Error(`Error: <access> db connection config not found!`);
         connection.namespace = 'access.permissions';
-        req.server.Permissions = require('./base/model')(connection);
+        req.server.Permissions = require('express-access-proxy-base/db/model')(connection);
     }
     next();
 }

@@ -1,6 +1,6 @@
 'use strict';
 // enabling config files (to be used in config folders having available and enabled dirs)
-const fs = require('../base/fs');
+const fs = require('express-access-proxy-base/fs');
 
 module.exports = (workdir, filenames) => {
     // check if links are valid, renew if not
