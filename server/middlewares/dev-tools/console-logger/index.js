@@ -1,6 +1,6 @@
 'use strict';
 // display middleware modified vars requested in server config
-const fn = require('../../../../base/functions');
+const fn = require('express-access-proxy-base/fn');
 function consoleLogger(req, res, next) {
     // the results will be taken AFTER middleware run
     next();

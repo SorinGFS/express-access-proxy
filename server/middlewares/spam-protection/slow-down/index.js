@@ -1,6 +1,6 @@
 'use strict';
 //
-const fn = require('../../../../base/functions');
+const fn = require('express-access-proxy-base/fn');
 const slowDown = require('express-slow-down');
 
 module.exports = {

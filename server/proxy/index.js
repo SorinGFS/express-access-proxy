@@ -2,7 +2,7 @@
 // http://expressjs.com/en/4x/api.html#router.route
 const router = require('express').Router();
 
-const fs = require('../../base/fs');
+const fs = require('express-access-proxy-base/fs');
 const expressProxy = require('express-http-proxy');
 
 // if auth.provider not defined will result a transparent proxy to the proxyPass host

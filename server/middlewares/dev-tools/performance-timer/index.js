@@ -1,6 +1,6 @@
 'use strict';
 // performance timer for running middlewares
-const fn = require('../../../../base/functions');
+const fn = require('express-access-proxy-base/fn');
 
 const performanceTimer = (req, res, next) => {
     if (process.env.NODE_ENV === 'development' && req.server && req.server.devTools && req.server.devTools.performanceTimer) {

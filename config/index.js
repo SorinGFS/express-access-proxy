@@ -2,8 +2,8 @@
 // DO NOT MODIFY - this is standard generic config index
 // returns configs as ARRAY from the directories where it is requested
 module.exports = (workdir, filter) => {
-    const fs = require('../base/fs');
-    const fn = require('../base/functions');
+    const fs = require('express-access-proxy-base/fs');
+    const fn = require('express-access-proxy-base/fn');
     // if enabled.json exists it will automatically update the links it contains
     if (fs.exists(workdir, 'enabled.json')) {
         const enabled = require(fs.pathResolve(workdir, 'enabled.json'));
