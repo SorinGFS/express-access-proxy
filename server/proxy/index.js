@@ -5,17 +5,24 @@ const router = require('express').Router();
 const fs = require('express-access-proxy-base/fs');
 const expressProxy = require('express-http-proxy');
 
-// if auth.provider not defined will result a transparent proxy to the proxyPass host
+// set express-http-proxy host and proxyOptions
 function proxy(req, res, next) {
-    const proxyOptions = () => {
-        try {
-            return require(fs.pathResolve(__dirname, req.server.auth.provider.name));
-        } catch (error) {
-            return {};
-        }
-    };
-    const proxy = expressProxy((req) => req.server.proxyPass, proxyOptions());
-    router.use(proxy);
+    if (req.server.proxyPass) {
+        const proxyOptions = () => {
+            try {
+                if (req.server.proxyName) return require(fs.pathResolve(__dirname, req.server.proxyName));
+                if (req.server.auth) {
+                    if (!req.server.auth.provider || !req.server.auth.provider.name) throw new Error(`Error: misconfigured Auth for ${req.hostname}, auth.provider.name is undefined!`);
+                    return require(fs.pathResolve(__dirname, req.server.auth.provider.name));
+                }
+                return {};
+            } catch (error) {
+                next(error);
+            }
+        };
+        const proxy = expressProxy((req) => req.server.proxyPass, proxyOptions());
+        router.use(proxy);
+    }
     next();
 }
 
