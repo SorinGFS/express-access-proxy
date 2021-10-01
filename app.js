@@ -41,7 +41,7 @@ function setServer(req, res, next) {
     }
     next();
 }
-
+// load the settings then pass the request to main server router
 app.use(setServer, server);
-
+// in an uncertain future we may run each server in a separate process by passing its config to this app
 module.exports = app;
