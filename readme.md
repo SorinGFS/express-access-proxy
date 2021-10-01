@@ -89,9 +89,9 @@ The application is designed in a maximum flexible way and allows granular contro
         1. [Routes](server/routes)
             1. [Logout](server/routes/logout)
             1. [Refresh](server/routes/refresh)
-        1. [Proxy](server/middlewares/proxy)
-            1. [Local](server/middlewares/proxy/local)
-            1. [Available Plugins](server/middlewares/proxy#plugins)
+        1. [Proxy](server/proxy)
+            1. [Local](server/proxy/local)
+            1. [Available Plugins](server/proxy#plugins)
                 1. [Strapi](https://github.com/SorinGFS/strapi-access-proxy#strapi-access-proxy)
 
 **Important:** Some modules are built-in or work only in a certain environment. For the rest of them there is one rule:
