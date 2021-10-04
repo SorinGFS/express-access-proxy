@@ -19,6 +19,22 @@ Servers can be configured for any of the following cases:
 -   many domains can be directed to the same server
 -   any domain can be directed to multiple servers depending on the route
 
+#### Server Name
+
+As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
+
+**File:** `config/servers/available/my-custom-server.json`
+
+```json
+{
+    "serverName": ["domain.com", "sub.domain.com", "ip"],
+    "...": { "...": "..." },
+    "server": {
+        "...": { "...": "..." }
+    }
+}
+```
+
 #### Server structure
 
 **File:** `config/servers/available/my-custom-server.json`
@@ -53,6 +69,33 @@ Servers can be configured for any of the following cases:
 }
 ```
 
+**Important:** Route match is based on `javascript RegExp` without flags (case sensitive). `RegExp flags` are available with `regexFlags` directive placed inside the route, like following:
+
+```json
+{
+    "^/route": {
+        "regexFlags": "i",
+        "...": "..."
+    }
+}
+```
+
+**Server structure related directives (built-in server not modules)**
+
+| Directive   | Type                     | Default | Required | Description                                                                       |
+| ----------- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------- |
+| self        | object                   |         | TRUE     | The config itself.                                                                |
+| serverName  | string or array          |         | TRUE     | The server name as hostname or ip, or array of them.                              |
+| secretKey   | string                   |         | FALSE    | Secret key used by JWT, if provided takes precedence over RSA keys.               |
+| privateKey  | string (path)            |         | FALSE    | RSA private key file path.                                                        |
+| publicKey   | string (path)            |         | FALSE    | RSA public key file path.                                                         |
+| server      | object                   |         | TRUE     | The object containing configurations for server block modules.                    |
+| locations   | array of objects         |         | FALSE    | The array of objects containing configurations for location block modules.        |
+| include     | string or array          |         | FALSE    | The path or array of\`/includes/\*\` paths to be included in config.              |
+| appSettings | object                   |         | FALSE    | The settings passed to \`Express\` app.                                           |
+| urlRewrite  | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\] |
+| return      | number                   |         | FALSE    | Return status code.                                                               |
+
 #### App Settings
 
 `Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). Example configuration:
@@ -80,18 +123,51 @@ Servers can be configured for any of the following cases:
 }
 ```
 
-#### Server Name
+#### Url Rewrite
 
-As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
+The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite module](https://nginx.org/en/docs/http/ngx_http_rewrite_module.html). However, only `rewrite`, `return` and `break` directives are supported, `if` and `set` are not. For `rewrite` we use the term `urlRewrite`, and all their breaking flags are suported: `last`, `break`, `redirect` or `permanent`. As rewrite function server uses the [javascript's replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace).
+
+##### Url Rewrite at server level example
 
 **File:** `config/servers/available/my-custom-server.json`
 
 ```json
 {
-    "serverName": ["domain.com", "sub.domain.com", "ip"],
-    "...": { "...": "..." },
+    "serverName": "domain-or-ip",
     "server": {
-        "...": { "...": "..." }
+        "urlRewrite": [
+            ["^(/download/.*)/media/(w+).?.*$", "$1/mp3/$2.mp3", "last"],
+            ["^(/download/.*)/audio/(w+).?.*$", "$1/mp3/$2.ra", "last"]
+        ],
+        "return": 403,
+        "...": { "...": "..." },
+        "locations": [
+            {
+                "^/download": {
+                    "...": { "...": "..." }
+                }
+            }
+        ]
+    }
+}
+```
+
+##### Url Rewrite at location level example
+
+**File:** `config/servers/available/my-custom-server.json`
+
+```json
+{
+    "serverName": "domain-or-ip",
+    "server": {
+        "...": { "...": "..." },
+        "locations": [
+            {
+                "^/route": {
+                    "urlRewrite": ["^(.*)$", "https://anotherDomain.com$1", "permanent"]
+                }
+            }
+        ]
     }
 }
 ```
