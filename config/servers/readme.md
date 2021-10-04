@@ -91,8 +91,8 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 | publicKey   | string (path)            |         | FALSE    | RSA public key file path.                                                         |
 | server      | object                   |         | TRUE     | The object containing configurations for server block modules.                    |
 | locations   | array of objects         |         | FALSE    | The array of objects containing configurations for location block modules.        |
-| include     | string or array          |         | FALSE    | The path or array of\`/includes/\*\` paths to be included in config.              |
-| appSettings | object                   |         | FALSE    | The settings passed to \`Express\` app.                                           |
+| include     | string or array          |         | FALSE    | The path or array of /includes/\* paths to be included in config.              |
+| appSettings | object                   |         | FALSE    | The settings passed to Express app.                                           |
 | urlRewrite  | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\] |
 | return      | number                   |         | FALSE    | Return status code.                                                               |
 

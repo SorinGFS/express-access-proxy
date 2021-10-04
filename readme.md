@@ -94,7 +94,7 @@ The application is designed in a maximum flexible way and allows granular contro
             1. [Available Plugins](server/proxy#plugins)
                 1. [Strapi](https://github.com/SorinGFS/strapi-access-proxy#strapi-access-proxy)
 
-**Note:** the server has built-in `urlRewrite`, direct db access, dynamically added app and route settings and `RegExp` based route selector.
+**Note:** the server has built-in `urlRewrite`, direct db access, JWT support, dynamically added app and route settings and `RegExp` based route selector.
 
 **Important:** Some modules are built-in or work only in a certain environment. For the rest of them there is one rule:
 - **if is not configured it doesn't run!**

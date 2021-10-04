@@ -200,7 +200,7 @@ config/**/includes/**
 # drafts folder
 zzz-drafts
 # temporary ignore
-server/routes/api/*
+server/**/api/*
 base
 actions
 lan-to-mongodb.json
