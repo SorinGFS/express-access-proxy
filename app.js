@@ -5,7 +5,7 @@ const app = require('express')();
 const fn = require('express-access-proxy-base/fn');
 const accessDb = require('./config/connections')((config) => config.database === 'access')[0];
 const configs = require('./config/servers')(() => true); // filter all
-const servers = require('./base/servers')(configs); // ###############################
+const servers = require('express-access-proxy-base/servers')(configs);
 const httpParsers = require('./server/middlewares/http-parsers');
 const server = require('./server');
 // set port
