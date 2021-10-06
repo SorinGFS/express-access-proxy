@@ -3,9 +3,9 @@
 const env = require('./config/env');
 const app = require('express')();
 const fn = require('express-access-proxy-base/fn');
-const authDb = require('./config/connections')((config) => config.dbName === 'access')[0];
+const accessDb = require('./config/connections')((config) => config.database === 'access')[0];
 const configs = require('./config/servers')(() => true); // filter all
-const servers = require('express-access-proxy-base/servers')(configs);
+const servers = require('./base/servers')(configs); // ###############################
 const httpParsers = require('./server/middlewares/http-parsers');
 const server = require('./server');
 // set port
@@ -22,11 +22,13 @@ function setServer(req, res, next) {
     // parse locations (also rewrite at location level if any)
     req.server.parseLocations(req);
     // send direct response if this resulted from the parsed configuration
-    if (req.server.response.status) return req.server.send(req, res);
+    if (req.sendStatus) return req.server.send(req, res);
     // apply app settings after the server has been combined with the location config
     if (req.server.appSettings) app.set(req.server.appSettings);
-    // set auth db connection (for the access permissions managed by this app).
-    if (req.server.auth && req.server.auth.mode) req.server.setAuthDb(req, authDb) 
+    // set access db connection (for the access permissions managed by this app).
+    if (req.server.auth && req.server.auth.mode) req.server.setAccessDb(req, accessDb);
+    // init site with server defaults if any. This object will hold only frontend shareable vars.
+    req.site = Object.assign({}, req.server.site);
     next();
 }
 // load the settings then pass the request to main server router
