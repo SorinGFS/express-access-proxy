@@ -1,6 +1,6 @@
 {
     "name": "express-access-proxy",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "description": "Access Management Reverse Proxy based on JWT.",
     "main": "app.js",
     "scripts": {
@@ -22,8 +22,8 @@
         "csurf": "^1.11.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "express-access-proxy-actions": "^1.0.5",
-        "express-access-proxy-base": "^1.0.5",
+        "express-access-proxy-actions": "^1.1.0",
+        "express-access-proxy-base": "^1.1.0",
         "express-fingerprint": "^1.2.2",
         "express-http-proxy": "^1.6.2",
         "express-rate-limit": "^5.3.0",
