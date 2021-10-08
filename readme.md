@@ -79,6 +79,7 @@ The application is designed in a maximum flexible way and allows granular contro
                 1. [Rate Limit](server/middlewares/spam-protection/rate-limit)
                 1. [Slow Down (DDOS protection)](server/middlewares/spam-protection/slow-down)
             1. [Body Parsers](server/middlewares/body-parsers)
+                1. [Data Adapter](server/middlewares/body-parsers/data-adapter)
                 1. [Method Overwrite](server/middlewares/body-parsers/method-override)
                 1. [Parse Form](server/middlewares/body-parsers/parse-form)
                 1. [Parse Json](server/middlewares/body-parsers/parse-json)
