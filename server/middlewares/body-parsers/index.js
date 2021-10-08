@@ -6,7 +6,8 @@ const parseForm = require('./parse-form');
 const parseJson = require('./parse-json');
 const parseText = require('./parse-text');
 const methodOverride = require('./method-override');
+const dataAdapter = require('./data-adapter');
 
-router.use(parseForm, parseJson, parseText, methodOverride);
+router.use(parseForm, parseJson, parseText, methodOverride, dataAdapter);
 
 module.exports = router;
