@@ -98,7 +98,27 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 
 #### App Settings
 
-`Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). Example configuration:
+`Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). However, some of those settings can't be dynamically set in `server` due to the way that `Express` calls their corresponding functions only once at the app loading time. So, the following settings can be controlled by placing their settings in the main `app`:
+- `trust proxy`: it doesn't make sense to have settings on server basis, it should be set `true` if `app` is behind a trusted proxy or `false` if the `app` is facing the internet. Default: `false`,
+- `query parser`: is not inherited in the `server`, so for performance reasons was disabled. Default: `false`,
+- `x-powered-by`: is not inherited in the `server`, so for performance reasons was disabled. Default: `false`,
+
+The following setings does not work at all:
+- `env`: the setting is managed by the `cross-env` dependency,
+- `strict routing`: is not inherited in the `server` and in the main `app` there are no handled routes. To obtain `strict routing` in a particular route use `const router = require('express').Router({ strict: true })`
+
+Dynamically manageable settings are:
+- `etag`
+- `jsonp callback name'`
+- `json escape`
+- `json spaces`
+- `json replacer`
+- `subdomain offset`
+- `views`
+- `view cache`
+- `view engine` (the engines still has to be installed in the main `app`)
+
+**Example configuration:**
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -106,13 +126,14 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 {
     "serverName": "domain-or-ip",
     "server": {
-        "appSettings": { "trust proxy": true },
+        "appSettings": { "etag": false },
         "...": { "...": "..." },
         "locations": [
             {
                 "^/route": {
                     "appSettings": {
-                        "query parser": false,
+                        "json escape": true,
+                        "json spaces": 2,
                         "etag": "strong"
                     },
                     "...": { "...": "..." }
@@ -122,6 +143,7 @@ As the name suggests, `serverName` contains the names or IPs to which the server
     }
 }
 ```
+**Note:** in this example `etag` was disabled at `server` level and enabled at `location` level.
 
 #### Url Rewrite
 
