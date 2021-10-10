@@ -8,6 +8,9 @@ const configs = require('./config/servers')(() => true); // filter all
 const servers = require('express-access-proxy-base/servers')(configs);
 const httpParsers = require('./server/middlewares/http-parsers');
 const server = require('./server');
+// set app
+app.set('query parser', false);
+app.set('x-powered-by', false);
 // set port
 const PORT = process.env.PORT || 7331;
 // app listen
@@ -24,7 +27,7 @@ function setServer(req, res, next) {
     // send direct response if this resulted from the parsed configuration
     if (req.sendStatus) return req.server.send(req, res);
     // apply app settings after the server has been combined with the location config
-    if (req.server.appSettings) app.set(req.server.appSettings);
+    if (req.server.appSettings) Object.keys(req.server.appSettings).forEach((key) => app.set(key, req.server.appSettings[key]));
     // set access db connection (for the access permissions managed by this app).
     if (req.server.auth && req.server.auth.mode) req.server.setAccessDb(req, accessDb);
     // init site with server defaults if any. This object will hold only frontend shareable vars.
