@@ -2,8 +2,9 @@
 
 ### Local Router
 
-This router handles local routes before passing the request to proxy.
+This router handles common local routes before passing the request to proxy.
 
 Existing routes:
-1. Logout => POST `/logout`
-1. Refresh => POST `/refresh`
+1. Auth => `/auth`
+    1. Logout => POST `/logout`
+    1. Refresh => POST `/refresh`
