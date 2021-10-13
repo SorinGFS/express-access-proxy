@@ -8,7 +8,7 @@ The module can have a simple configuration with `"dataAdapter": true` in which c
 
 If the simple configuration is not enough the module can be onfigured in detail to map each possible `req.body` key to desired `req` key or subkey. Also, multiple `req.body` keys can be mapped to the same `req` object key or subkey, in which case the latest key will prevail (if in the same `req.body` are present multiple keys belonging to the same `req` key or subkey). This procedure is meant to cover multiple `req.body` contexts not multiple `req.body` keys mapped to the same `req` key or subkey.
 
-**Important:** if target object does not exist it will be created. The `req.body` keys must be of type object, but not array.
+**Important:** if target object does not exist it will be created. The `req.body` keys must be of type object, but not array. The `req.body` contains `req.body.body` then lastly `req.body` will be replaced by its value (no configuration needed for this).
 
 #### Some usage examples:
 

@@ -4,7 +4,7 @@ const dataAdapter = (req, res, next) => {
     if (req.server.dataAdapter && req.body && !Array.isArray(req.body)) {
         if (typeof req.server.dataAdapter === 'boolean') {
             Object.keys(req.body).forEach((key) => {
-                if (typeof req.body[key] === 'object' && !Array.isArray(req.body[key])) {
+                if (key !== 'body' && typeof req.body[key] === 'object' && !Array.isArray(req.body[key])) {
                     if (!req.site[key]) req.site[key] = {};
                     Object.assign(req.site[key], req.body[key]);
                 }
@@ -22,7 +22,7 @@ const dataAdapter = (req, res, next) => {
                         if (Array.isArray(req.server.dataAdapter[key][subkey])) {
                             req.server.dataAdapter[key][subkey].forEach((item) => {
                                 if (Object.keys(req.body).includes(item)) {
-                                    if (typeof req.body[item] === 'object' && !Array.isArray(req.body[item])) {
+                                    if (key !== 'body' && typeof req.body[item] === 'object' && !Array.isArray(req.body[item])) {
                                         if (!req[key]) req[key] = {};
                                         if (!req[key][subkey]) req[key][subkey] = {};
                                         Object.assign(req[key][subkey], req.body[item]);
@@ -36,7 +36,7 @@ const dataAdapter = (req, res, next) => {
                     if (Array.isArray(req.server.dataAdapter[key])) {
                         req.server.dataAdapter[key].forEach((item) => {
                             if (Object.keys(req.body).includes(item)) {
-                                if (typeof req.body[item] === 'object' && !Array.isArray(req.body[item])) {
+                                if (key !== 'body' && typeof req.body[item] === 'object' && !Array.isArray(req.body[item])) {
                                     if (!req[key]) req[key] = {};
                                     Object.assign(req[key], req.body[item]);
                                 }
@@ -46,6 +46,8 @@ const dataAdapter = (req, res, next) => {
                 }
             });
         }
+        // for every case req.body.body was avoided, if such key exists it will replace the actual req.body
+        if (req.body.body) req.body = req.body.body;
     }
     next();
 };
