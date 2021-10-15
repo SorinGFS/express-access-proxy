@@ -82,19 +82,20 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 
 **Server structure related directives (built-in server not modules)**
 
-| Directive   | Type                     | Default | Required | Description                                                                       |
-| ----------- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------- |
-| self        | object                   |         | TRUE     | The config itself.                                                                |
-| serverName  | string or array          |         | TRUE     | The server name as hostname or ip, or array of them.                              |
-| secretKey   | string                   |         | FALSE    | Secret key used by JWT, if provided takes precedence over RSA keys.               |
-| privateKey  | string (path)            |         | FALSE    | RSA private key file path.                                                        |
-| publicKey   | string (path)            |         | FALSE    | RSA public key file path.                                                         |
-| server      | object                   |         | TRUE     | The object containing configurations for server block modules.                    |
-| locations   | array of objects         |         | FALSE    | The array of objects containing configurations for location block modules.        |
-| include     | string or array          |         | FALSE    | The path or array of /includes/\* paths to be included in config.              |
-| appSettings | object                   |         | FALSE    | The settings passed to Express app.                                           |
-| urlRewrite  | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\] |
-| return      | number                   |         | FALSE    | Return status code.                                                               |
+| Directive                                      | Type                     | Default | Required | Description                                                                                         |
+| ---------------------------------------------- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------------------------- |
+| self                                           | object                   |         | TRUE     | The config itself.                                                                                  |
+| \[serverName\](#server-name)                   | string or array          |         | TRUE     | The server name as hostname or ip, or array of them.                                                |
+| secretKey                                      | string                   |         | FALSE    | Secret key used by JWT, if provided takes precedence over RSA keys.                                 |
+| privateKey                                     | string (path)            |         | FALSE    | RSA private key file path.                                                                          |
+| publicKey                                      | string (path)            |         | FALSE    | RSA public key file path.                                                                           |
+| server                                         | object                   |         | TRUE     | The object containing configurations for server block modules.                                      |
+| locations                                      | array of objects         |         | FALSE    | The array of objects containing configurations for location block modules.                          |
+| \[vhost\](#virtual-hosts)                      | string (path)            |         | FALSE    | The path to Express app, router, or middleware, or any app that can handle \`req, res\` by its own. |
+| \[include\](#including-entire-files-in-config) | string or array          |         | FALSE    | The path or array of /includes/\* paths to be included in config.                                   |
+| \[appSettings\](#app-settings)                 | object                   |         | FALSE    | The settings passed to Express\`app.                                                                |
+| \[urlRewrite\](#url-rewrite)                   | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\]                   |
+| return                                         | number                   |         | FALSE    | Return status code.                                                                                 |
 
 #### App Settings
 
@@ -145,11 +146,11 @@ Dynamically manageable settings are:
 ```
 **Note:** in this example `etag` was disabled at `server` level and enabled at `location` level.
 
-#### Url Rewrite
+#### URL Rewrite
 
 The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite module](https://nginx.org/en/docs/http/ngx_http_rewrite_module.html). However, only `rewrite`, `return` and `break` directives are supported, `if` and `set` are not. For `rewrite` we use the term `urlRewrite`, and all their breaking flags are suported: `last`, `break`, `redirect` or `permanent`. As rewrite function server uses the [javascript's replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace).
 
-##### Url Rewrite at server level example
+##### URL Rewrite at server level example
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -174,7 +175,7 @@ The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite 
 }
 ```
 
-##### Url Rewrite at location level example
+##### URL Rewrite at location level example
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -193,6 +194,78 @@ The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite 
     }
 }
 ```
+
+#### Injecting vars into request via config
+
+All settings placed in the config will be usable after the server has been selected based on the `req.hostname` by accessing `req.server`. If a `server > locations > path` was used then the settings inside it are merged into parent `server`, so inside `req.server` the settings represents the already selected path. The `req.server.site` object has a special meaning as settings shareable with frontend, and their settings will be merged into `req.site` after the server has been selected. Basically, the `req.server.site` settings are the initial defaults for the `req.site` which then can be updated while passing through the routes. Due to the fact that `req.site` is available **after** the path was choosen allows us to perform various tasks inside the already selected route (in site), including reparsing the path using a `sub router` having its settings (`routes` and `options`) gathered from `req.site.router`. Some of the use cases may be setting a `controller`, `translations`, `validation schema`, `filters`, and so on... 
+
+##### Example how to set a sub router with custom settings
+
+**File:** `config/servers/available/my-custom-server.json`
+
+```json
+{
+    "serverName": "domain-or-ip",
+    "server": {
+        "...": { "...": "..." },
+        "locations": [
+            {
+                "^/api": {
+                    "...": { "...": "..." },
+                    "site": {
+                        "language": "en",
+                        "database": "blog",
+                        "controller": "posts",
+                        "action": "index",
+                        "router": {
+                            "routes": [
+                                "/:language([a-z]{2}|[a-z]{2}-[a-z]{2})?/:_id([a-f0-9]{1,24})?/:action(count|distinct|data|validation|indexes|info)/*",
+                                "/:language([a-z]{2}|[a-z]{2}-[a-z]{2})?/:controller([a-z]{3,30})?/:_id([a-f0-9]{1,24})?/:action(count|distinct|data|validation|indexes|info)?/*"
+                            ],
+                            "options": {
+                                "strict": true
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+```
+... then use the settings inside a file:
+
+**File:** `server/some/path/api.js`
+
+```js
+const express = require('express');
+const router = express.Router();
+// set the sub router with options from `req.site.router.options` and use it inside the parent router
+const setRoutes = (req, res, next) => {
+    if (!req.site.router) req.site.router = {};
+    if (!req.site.router.routes) req.site.router.routes = '/';
+    const subRouter = express.Router(req.site.router.options);
+    router.use(subRouter);
+    subRouter.use(req.site.router.routes, mid1, mid2/*, ...mids */);
+    next();
+};
+// perform the tasks inside the route
+const mid1 = (req, res, next) => {
+    // dp whatever
+    next();
+}
+const mid2 = (req, res, next) => {
+    // dp whatever
+    next();
+}
+// use the sub router
+router.use(setRoutes);
+module.exports = router;
+```
+
+### Virtual Hosts
+
+Similarly to a proxy a Virtual Host is a final destination of a request, but differently the request is passed to it directly without a new `http` request. It can be another app, an api, a service, an interface, a website or anything that can handle `req, res` by its own.
 
 #### Including entire files in config
 
