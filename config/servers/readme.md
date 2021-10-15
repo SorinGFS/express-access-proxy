@@ -85,16 +85,16 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 | Directive                                      | Type                     | Default | Required | Description                                                                                         |
 | ---------------------------------------------- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------------------------- |
 | self                                           | object                   |         | TRUE     | The config itself.                                                                                  |
-| \[serverName\](#server-name)                   | string or array          |         | TRUE     | The server name as hostname or ip, or array of them.                                                |
+| [serverName](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#server-name)                   | string or array          |         | TRUE     | The server name as hostname or ip, or array of them.                                                |
 | secretKey                                      | string                   |         | FALSE    | Secret key used by JWT, if provided takes precedence over RSA keys.                                 |
 | privateKey                                     | string (path)            |         | FALSE    | RSA private key file path.                                                                          |
 | publicKey                                      | string (path)            |         | FALSE    | RSA public key file path.                                                                           |
 | server                                         | object                   |         | TRUE     | The object containing configurations for server block modules.                                      |
 | locations                                      | array of objects         |         | FALSE    | The array of objects containing configurations for location block modules.                          |
-| \[vhost\](#virtual-hosts)                      | string (path)            |         | FALSE    | The path to Express app, router, or middleware, or any app that can handle \`req, res\` by its own. |
-| \[include\](#including-entire-files-in-config) | string or array          |         | FALSE    | The path or array of /includes/\* paths to be included in config.                                   |
-| \[appSettings\](#app-settings)                 | object                   |         | FALSE    | The settings passed to Express\`app.                                                                |
-| \[urlRewrite\](#url-rewrite)                   | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\]                   |
+| [vhost](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#virtual-hosts)                      | string (path)            |         | FALSE    | The path to Express app, router, or middleware, or any app that can handle \`req, res\` by its own. |
+| [include](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#including-entire-files-in-config) | string or array          |         | FALSE    | The path or array of /includes/\* paths to be included in config.                                   |
+| [appSettings](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#app-settings)                 | object                   |         | FALSE    | The settings passed to Express\`app.                                                                |
+| [urlRewrite](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#url-rewrite)                   | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\]                   |
 | return                                         | number                   |         | FALSE    | Return status code.                                                                                 |
 
 #### App Settings
