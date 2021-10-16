@@ -19,22 +19,6 @@ Servers can be configured for any of the following cases:
 -   many domains can be directed to the same server
 -   any domain can be directed to multiple servers depending on the route
 
-### Server Name
-
-As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
-
-**File:** `config/servers/available/my-custom-server.json`
-
-```json
-{
-    "serverName": ["domain.com", "sub.domain.com", "ip"],
-    "...": { "...": "..." },
-    "server": {
-        "...": { "...": "..." }
-    }
-}
-```
-
 ### Server structure
 
 **File:** `config/servers/available/my-custom-server.json`
@@ -96,6 +80,22 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 | [appSettings](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#app-settings)                 | object                   |         | FALSE    | The settings passed to Express\`app.                                                                |
 | [urlRewrite](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#url-rewrite)                   | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\]                   |
 | return                                         | number                   |         | FALSE    | Return status code.                                                                                 |
+
+### Server Name
+
+As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
+
+**File:** `config/servers/available/my-custom-server.json`
+
+```json
+{
+    "serverName": ["domain.com", "sub.domain.com", "ip"],
+    "...": { "...": "..." },
+    "server": {
+        "...": { "...": "..." }
+    }
+}
+```
 
 ### App Settings
 

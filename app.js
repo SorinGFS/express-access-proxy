@@ -28,8 +28,12 @@ function setServer(req, res, next) {
     if (req.sendStatus) return req.server.send(req, res);
     // apply app settings after the server has been combined with the location config
     if (req.server.appSettings) Object.keys(req.server.appSettings).forEach((key) => app.set(key, req.server.appSettings[key]));
-    // set access db connection (for the access permissions managed by this app).
-    if (req.server.auth && req.server.auth.mode) req.server.setAccessDb(req, accessDb);
+    // set access permissions model (for the access permissions managed by this app).
+    if (req.server.auth && req.server.auth.mode) req.server.setModelPermissions(req, accessDb);
+    // set access logs model
+    if (req.server.accessLogs) req.server.setModelLogs(req, accessDb);
+    // set server errors model
+    if (req.server.errorLogs) req.server.setModelErrors(req, accessDb);
     // init site with server defaults if any. This object will hold only frontend shareable vars.
     req.site = Object.assign({}, req.server.site);
     next();
