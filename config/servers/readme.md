@@ -1,6 +1,6 @@
 [Back to Main Page](https://github.com/SorinGFS/express-access-proxy#configuration)
 
-### Server Configuration
+## Server Configuration
 
 This application was inspired by Nginx's way of doing things with the use of blocks: `http`, `server`, `location`. So, seemingly similar settings have different priority depending on their position: `server` overwrites `http`, and location overwrites both `http` and `server`. Think the `http` block at `Express` level, and here you can configure the `server` and it's `locations`.
 
@@ -19,7 +19,7 @@ Servers can be configured for any of the following cases:
 -   many domains can be directed to the same server
 -   any domain can be directed to multiple servers depending on the route
 
-#### Server Name
+### Server Name
 
 As the name suggests, `serverName` contains the names or IPs to which the server responds, and in addition to the unique form presented above, it can also be in the form of an array:
 
@@ -35,7 +35,7 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 }
 ```
 
-#### Server structure
+### Server structure
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -97,7 +97,7 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 | [urlRewrite](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/readme.md#url-rewrite)                   | array or array of arrays |         | FALSE    | Rewrite rule or rules. Syntax: \[regex, replacement, breakingFlag?, regexFlags?\]                   |
 | return                                         | number                   |         | FALSE    | Return status code.                                                                                 |
 
-#### App Settings
+### App Settings
 
 `Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). However, some of those settings can't be dynamically set in `server` due to the way that `Express` calls their corresponding functions only once at the app loading time. So, the following settings can be controlled by placing their settings in the main `app`:
 - `trust proxy`: it doesn't make sense to have settings on server basis, it should be set `true` if `app` is behind a trusted proxy or `false` if the `app` is facing the internet. Default: `false`,
@@ -110,7 +110,7 @@ The following setings does not work at all:
 
 Dynamically manageable settings are:
 - `etag`
-- `jsonp callback name'`
+- `jsonp callback name`
 - `json escape`
 - `json spaces`
 - `json replacer`
@@ -146,11 +146,11 @@ Dynamically manageable settings are:
 ```
 **Note:** in this example `etag` was disabled at `server` level and enabled at `location` level.
 
-#### URL Rewrite
+### URL Rewrite
 
 The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite module](https://nginx.org/en/docs/http/ngx_http_rewrite_module.html). However, only `rewrite`, `return` and `break` directives are supported, `if` and `set` are not. For `rewrite` we use the term `urlRewrite`, and all their breaking flags are suported: `last`, `break`, `redirect` or `permanent`. As rewrite function server uses the [javascript's replace function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace).
 
-##### URL Rewrite at server level example
+#### URL Rewrite at server level example
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -175,7 +175,7 @@ The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite 
 }
 ```
 
-##### URL Rewrite at location level example
+#### URL Rewrite at location level example
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -195,11 +195,11 @@ The server built-in URL Rewrite module is entirely inspired by [Nginx's rewrite 
 }
 ```
 
-#### Injecting vars into request via config
+### Injecting vars into request via config
 
 All settings placed in the config will be usable after the server has been selected based on the `req.hostname` by accessing `req.server`. If a `server > locations > path` was used then the settings inside it are merged into parent `server`, so inside `req.server` the settings represents the already selected path. The `req.server.site` object has a special meaning as settings shareable with frontend, and their settings will be merged into `req.site` after the server has been selected. Basically, the `req.server.site` settings are the initial defaults for the `req.site` which then can be updated while passing through the routes. Due to the fact that `req.site` is available **after** the path was choosen allows us to perform various tasks inside the already selected route (in site), including reparsing the path using a `sub router` having its settings (`routes` and `options`) gathered from `req.site.router`. Some of the use cases may be setting a `controller`, `translations`, `validation schema`, `filters`, and so on... 
 
-##### Example how to set a sub router with custom settings
+#### Example how to set a sub router with custom settings
 
 **File:** `config/servers/available/my-custom-server.json`
 
@@ -267,7 +267,7 @@ module.exports = router;
 
 Similarly to a proxy a Virtual Host is a final destination of a request, but differently the request is passed to it directly without a new `http` request. It can be another app, an api, a service, an interface, a website or anything that can handle `req, res` by its own.
 
-#### Including entire files in config
+### Including entire files in config
 
 Each server config may also include another files located in `config/servers/includes/**/*.json` and referred inside config at any level by the `include` directive. Included files must exist in `config/servers/includes/**` directory no matter how deep. The files will be included based on directives inside server configs in the specified position. They can be included anywhere, but in such a way that after inclusion the resulting configuration should be valid. Included files may also contain `include` directive. Here some examples about including files:
 
