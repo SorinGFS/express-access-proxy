@@ -66,7 +66,7 @@ The application is designed in a maximum flexible way and allows granular contro
     - [Middlewares](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master)
         1. [Http Parsers](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers)
             1. [Cookie Parser](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers/cookie-parser)
-            1. [Http Logger](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers/volleyball)
+            1. [Http Console Logger](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers/volleyball)
         1. [Access](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access)
             1. [Set Device (mobile-detect)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/mobile-detect)
             1. [CSRF Protection](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/csrf-protection)
@@ -86,6 +86,7 @@ The application is designed in a maximum flexible way and allows granular contro
         1. [Dev Tools](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools)
             1. [Console Logger](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools/console-logger)
             1. [Performance Timer](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools/performance-timer)
+        1. [Http Error Logs](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-errors)
     - [Routes](server/routes)
         1. [Auth](server/routes/auth)
             1. [Logout](server/routes/auth/logout)
@@ -101,7 +102,6 @@ The application is designed in a maximum flexible way and allows granular contro
 
 ### Todo next (in order of priority):
 
-- Finish Access Logs
 - Add upstream support
 - Add local authentication
 - Add web admin interface
