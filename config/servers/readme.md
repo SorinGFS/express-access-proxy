@@ -99,10 +99,14 @@ As the name suggests, `serverName` contains the names or IPs to which the server
 
 ### App Settings
 
-`Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). However, some of those settings can't be dynamically set in `server` due to the way that `Express` calls their corresponding functions only once at the app loading time. So, the following settings can be controlled by placing their settings in the main `app`:
+`Express` app can be also configured at `server` and `location` levels using `appSettings` directive. For a list of available settings see [Express app(set)](https://expressjs.com/en/api.html#app.set). However, some of those settings can't be dynamically set in `server` due to the way that `Express` calls their corresponding functions only once at the app loading time. So, the following settings can be controlled by placing their settings in the main `config/app.settings`:
 - `trust proxy`: it doesn't make sense to have settings on server basis, it should be set `true` if `app` is behind a trusted proxy or `false` if the `app` is facing the internet. Default: `false`,
 - `query parser`: is not inherited in the `server`, so for performance reasons was disabled. Default: `false`,
 - `x-powered-by`: is not inherited in the `server`, so for performance reasons was disabled. Default: `false`,
+
+Also in the same `config/app` define:
+- `accessDbName` - the name of the database used for `auth access permissions`, `access logs`, `error logs` and so on. Default: `access`, if the `app` is a `sub app` of the main `app` this setting can target another database.
+- `listen` - instruct `app` to listen or not. Default: `true`, if the `app` is a `sub app` of the main `app` this can be set to `false`.
 
 The following setings does not work at all:
 - `env`: the setting is managed by the `cross-env` dependency,
