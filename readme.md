@@ -61,6 +61,7 @@ The application is designed in a maximum flexible way and allows granular contro
 #### Configuration Steps
 
 1. [Environment Configuration](config/env)
+1. [Main App Configuration](config/app)
 1. [Database Connection Configuration](config/connections)
 1. [Server Configuration](config/servers)
     - [Middlewares](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master)

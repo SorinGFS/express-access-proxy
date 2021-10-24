@@ -1,24 +1,20 @@
 'use strict';
-// set req server to be used in middlewares
+// The application transfers the requests to the server according to the requested host.
 const env = require('./config/env');
-const app = require('express')();
 const fn = require('express-access-proxy-base/fn');
-const accessDb = require('./config/connections')((config) => config.database === 'access')[0];
+const app = require('express')();
+const appConfig = require('./config/app');
+const accessDb = require('./config/connections')((config) => config.database === appConfig.accessDbName)[0];
 const configs = require('./config/servers')(() => true); // filter all
 const servers = require('express-access-proxy-base/servers')(configs);
 const httpParsers = require('express-access-proxy-middlewares/http-parsers');
 const handleError = require('express-access-proxy-middlewares/http-errors');
 const createError = require('http-errors');
 const server = require('./server');
-// set app
-app.set('query parser', false);
-app.set('x-powered-by', false);
-// uncomment next line if your app sits behind a proxy you trust (see docs!)
-// app.set('trust proxy', true);
-// set port
-const PORT = process.env.PORT || 7331;
+// set app (if your app sits behind a proxy you trust set "trust proxy": true in config, for more info see docs!)
+if (appConfig.settings) Object.keys(appConfig.settings).forEach((key) => app.set(key, appConfig.settings[key]));
 // app listen
-app.listen(PORT, console.log(`App running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`));
+if (appConfig.listen) app.listen(process.env.PORT, console.log(`${process.env.APP_NAME} is running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`));
 // select server based on request hostname and paste it to the request
 const setServer = (req, res, next) => {
     // using the serialized serverName in base servers
@@ -45,5 +41,5 @@ const setServer = (req, res, next) => {
 };
 // load the settings then pass the request to main server router
 app.use(httpParsers, setServer, server, handleError);
-// in an uncertain future we may run each server in a separate process by passing its config to this app
+// it is possible to chain the same app as sub app of this app with own settings
 module.exports = app;

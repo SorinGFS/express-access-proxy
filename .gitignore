@@ -201,8 +201,5 @@ config/**/includes/**
 zzz-drafts
 # temporary ignore
 server/**/api/*
-server/middlewares/*
-base
-actions
 lan-to-mongodb.json
 mongodb-blog.json
