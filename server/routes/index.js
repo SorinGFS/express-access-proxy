@@ -1,5 +1,5 @@
 'use strict';
-// http://expressjs.com/en/4x/api.html#router.route
+// https://expressjs.com/en/4x/api.html#express.router
 const router = require('express').Router();
 const fs = require('express-access-proxy-base/fs');
 
