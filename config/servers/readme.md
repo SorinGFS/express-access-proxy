@@ -121,7 +121,7 @@ Dynamically manageable settings are:
 - `subdomain offset`
 - `views`
 - `view cache`
-- `view engine` (the engines still has to be installed in the main `app`)
+- `view engine` (the engines still has to be installed in the main `app`, see [official docs](https://expressjs.com/en/resources/template-engines.html))
 
 **Example configuration:**
 

@@ -3,8 +3,6 @@
 const router = require('express').Router();
 
 const access = require('express-access-proxy-middlewares/access');
-const bodyParsers = require('express-access-proxy-middlewares/body-parsers');
-const spamProtection = require('express-access-proxy-middlewares/spam-protection');
 const routes = require('./routes');
 const proxy = require('./proxy');
 const handleError = require('express-access-proxy-middlewares/http-errors');
@@ -14,6 +12,6 @@ const vhost = (req, res, next) => {
     next();
 };
 
-router.use(access, spamProtection, bodyParsers, routes, proxy, vhost, handleError);
+router.use(access, routes, proxy, vhost, handleError);
 
 module.exports = router;

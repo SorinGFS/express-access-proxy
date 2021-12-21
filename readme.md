@@ -69,21 +69,26 @@ The application is designed in a maximum flexible way and allows granular contro
             - [Cookie Parser](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers/cookie-parser)
             - [Http Console Logger](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/http-parsers/volleyball)
         - [Access](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access)
-            - [Set Device (mobile-detect)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/mobile-detect)
+            - [Access Control](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control)
+                - [Allow Contexts (e.g.,RBAC)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control/allow-contexts)
+                - [Allow Ips (firewall)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control/allow-ips)
+                - [Allow Http Methods](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control/allow-methods)
+                - [Allow Origins](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control/allow-origins)
             - [CSRF Protection](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/csrf-protection)
+            - [Set Device (mobile-detect)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/mobile-detect)
+            - [Localization (MaxMind GeoIp)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/localization)
             - [Fingerprint](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/fingerprint)
             - [Authenticate (using JWT)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/authenticate)
-            - [Access Control](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-control)
+            - [Spam Protection](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/spam-protection)
+                - [Rate Limit](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/spam-protection/rate-limit)
+                - [Slow Down (DDOS protection)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/spam-protection/slow-down)
+            - [Body Parsers](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers)
+                - [Data Adapter](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers/data-adapter)
+                - [Method Overwrite](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers/method-override)
+                - [Parse Form](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers/parse-form)
+                - [Parse Json](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers/parse-json)
+                - [Parse Text](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/body-parsers/parse-text)
             - [Access Logs](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/access/access-logs)
-        - [Spam Protection](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/spam-protection)
-            - [Rate Limit](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/spam-protection/rate-limit)
-            - [Slow Down (DDOS protection)](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/spam-protection/slow-down)
-        - [Body Parsers](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers)
-            - [Data Adapter](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers/data-adapter)
-            - [Method Overwrite](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers/method-override)
-            - [Parse Form](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers/parse-form)
-            - [Parse Json](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers/parse-json)
-            - [Parse Text](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/body-parsers/parse-text)
         - [Dev Tools](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools)
             - [Console Logger](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools/console-logger)
             - [Performance Timer](https://github.com/SorinGFS/express-access-proxy-middlewares/tree/master/dev-tools/performance-timer)
@@ -99,6 +104,10 @@ The application is designed in a maximum flexible way and allows granular contro
 
 **Important:** Some modules are built-in or work only in a certain environment. For the rest of them there is one rule:
 - **if is not configured it doesn't run!**
+
+### Examples and Presets
+
+A growing list of reusable settings and examples can be found in [config/servers/includes](config/servers/includes).
 
 ### Todo next (in order of priority):
 

@@ -1,4 +1,4 @@
-[Back to Main Page](https://github.com/SorinGFS/express-access-proxy#express-access-proxy)
+[Back to Main Page](https://github.com/SorinGFS/express-access-proxy#configuration)
 
 ### Main Server Router
 
