@@ -158,7 +158,6 @@ ClientBin/
 *.dbproj.schemaview
 *.pfx
 *.publishsettings
-node_modules/
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -191,15 +190,28 @@ ModelManifest.xml
 # Snippets folder
 [Ss]nippets/*
 
+# Node.js
+lib-cov
+lcov.info
+pids
+logs
+results
+build
+node_modules
+.node_history
+package-lock.json
+**/package-lock.json
+!docs/package-lock.json
+
 # keys symlinks
 config/**/enabled/**
 !config/**/enabled/.gitkeep
-# inclusions
-config/**/includes/**
-!config/**/includes/.gitkeep
 # drafts folder
 zzz-drafts
 # temporary ignore
-server/**/api/*
-lan-to-mongodb.json
+config/**/tests/**
+!config/**/tests/.gitkeep
+server/**/api/**
+base/
+!config/**/base/
 mongodb-blog.json

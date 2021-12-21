@@ -1,12 +1,13 @@
 {
     "name": "express-access-proxy",
-    "version": "1.9.0",
+    "version": "1.10.0",
     "description": "Access Management Reverse Proxy based on JWT.",
     "main": "index.js",
     "scripts": {
         "start": "cross-env NODE_ENV=production node .",
         "dev": "cross-env NODE_ENV=development nodemon .",
-        "action": "node node_modules/express-access-proxy-actions"
+        "action": "node node_modules/express-access-proxy-actions",
+        "updateMaxMindDb": "node ./node_modules/geoip-lite/scripts/updatedb.js"
     },
     "author": {
         "name": "SorinGFS",
@@ -19,12 +20,12 @@
     "license": "MIT",
     "dependencies": {
         "dotenv": "^8.2.0",
-        "express": "^4.17.1",
-        "express-access-proxy-actions": "1.2.0",
-        "express-access-proxy-base": "1.2.0",
-        "express-access-proxy-middlewares": "1.2.0",
-        "express-http-proxy": "^1.6.2",
-        "http-errors": "^1.8.0",
+        "express": "4.17.1",
+        "express-access-proxy-actions": "1.4.0",
+        "express-access-proxy-base": "1.4.0",
+        "express-access-proxy-middlewares": "1.4.0",
+        "express-http-proxy": "^1.6.3",
+        "http-errors": "2.0.0",
         "pluralize": "^8.0.0"
     },
     "devDependencies": {

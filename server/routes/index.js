@@ -3,6 +3,6 @@
 const router = require('express').Router();
 const fs = require('express-access-proxy-base/fs');
 
-fs.dirs(__dirname).forEach((route) => router.use(`/${route}`, require(`./${route}`)));
+fs.dirs(__dirname).forEach((route) => router.use(`/${route}/`, require(`./${route}`)));
 
 module.exports = router;
