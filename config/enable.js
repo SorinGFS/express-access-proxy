@@ -13,9 +13,9 @@ module.exports = (workdir, filenames) => {
             linksToEnable.push(file);
         });
     }
-    // detect links removed in config in order to remove related files
-    const existingLinks = fs.files(workdir, 'enabled');
-    const linksToRemove = existingLinks.filter((file) => !linksToEnable.includes(file));
+    // detect links removed in config in order to remove related entries
+    const existingEntries = fs.entries(workdir, 'enabled');
+    const linksToRemove = existingEntries.filter((file) => !linksToEnable.includes(file));
     if (linksToRemove.length > 0) {
         linksToRemove.forEach((file) => {
             fs.unlink(workdir, 'enabled', file);
