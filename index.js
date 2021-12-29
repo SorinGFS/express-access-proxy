@@ -31,7 +31,7 @@ const setServer = (req, res, next) => {
     // mark time for logs
     if (req.server.accessLogs || req.server.errorLogs) req.start = new Date().getTime();
     // set accessDb connection
-    if (req.server.accessLogs || req.server.errorLogs || (req.server.auth && req.server.auth.mode)) req.accessDb = req.server.setModel(accessDb);
+    if (req.server.accessLogs || req.server.errorLogs || (req.server.auth && req.server.auth.mode)) req.accessDb = req.server.getModel(accessDb);
     // init site (state) with server defaults if any. This object will hold only frontend shareable vars.
     req.site = Object.assign({}, req.server.site);
     next();
