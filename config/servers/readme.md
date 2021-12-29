@@ -293,6 +293,7 @@ Each server config may also include another files located in `config/servers/inc
 -   on same level key similarity the later wins
 -   on different level key similarity the deeper level wins
 -   all included files must be `json` formatted as `array` of at least one `object`: `[{...}]`
+-   including folders is also supported in which case included folder must contain `index.json` file with config in it
 -   `serverName` directive can be a `string` for one name, or `array` for single or multiple names.
 -   `include` directive can be a `string` for one file, or `array` for single or multiple files.
 -   always inspect resulted config in console!
@@ -311,3 +312,13 @@ Once configured, the configuration must be enabled by adding the corresponding s
 ```
 
 **Note:** in case of manual management the `enabled.json` must be removed.
+
+Enabling folders instead of files is also supported, in which case enabled folder must contain `index.json` file with the config in it:
+
+**File:** `config/servers/enabled.json`
+
+```json
+["myDomain.com", "anotherDomain", "...", "or-any-other-folder"]
+```
+
+**Note:** for the above example all folders must exist and must contain `index.json` file.
