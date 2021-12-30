@@ -1,6 +1,6 @@
 {
     "name": "express-access-proxy",
-    "version": "1.11.4",
+    "version": "1.11.5",
     "description": "Access Management Reverse Proxy based on JWT.",
     "main": "index.js",
     "scripts": {
