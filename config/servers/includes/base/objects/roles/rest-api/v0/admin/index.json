@@ -19,7 +19,7 @@
             { "include": "includes/base/properties/methods/model/createIndex" },
             { "include": "includes/base/properties/methods/model/dropIndex" },
             { "include": "includes/base/properties/methods/model/info" },
-            { "include": "includes/base/properties/methods/model/validation" },
+            { "include": "includes/base/properties/methods/model/getValidation" },
             { "include": "includes/base/properties/methods/model/setValidation" },
             { "include": "includes/base/properties/methods/model/setControllerOptions" },
             { "include": "includes/base/properties/methods/model/listAuthorizedControllers" },

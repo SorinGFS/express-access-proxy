@@ -20,7 +20,7 @@
 - createIndex
 - dropIndex
 - info
-- validation
+- getValidation
 - setValidation
 - setControllerOptions
 - listAuthorizedControllers

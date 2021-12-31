@@ -31,7 +31,7 @@ These are the model actions alocated to roles and this schema is just an example
 | controller   | createIndex               | POST        | indexes     |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
 | controller   | dropIndex                 | DELETE      | indexes     |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
 | controller   | info                      | GET         | info        |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
-| controller   | validation                | GET         | validation  |             |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: | :heavy\_check\_mark: |
+| controller   | getValidation             | GET         | validation  |             |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: | :heavy\_check\_mark: |
 | controller   | setValidation             | POST        | validation  |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
 | controller   | setControllerOptions      | PATCH       | controllers |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
 | db           | listAuthorizedControllers | GET         | controllers |             |                      |                      |                      | :heavy\_check\_mark: | :heavy\_check\_mark: |
