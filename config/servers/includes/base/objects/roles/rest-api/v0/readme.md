@@ -2,13 +2,13 @@
 
 ### RestApi Roles v0 (basic)
 
-These are the model actions alocated to roles and this schema is just an example containing all the available model actions. In order to build another role chart according needs using this `json` data a `json-schema` can be created. These roles can be used in conjunction with `accessControl.allowContext` rules for more granular control, e.g, to limit access based on `site.controller`, `site.database`, or any other available context value.
+These are the model actions alocated to roles and this schema is just an example containing all the available model actions. In order to build another role chart according needs a `json-schema` can be created using this `json` data. For more granular control these roles can be used in conjunction with `accessControl.allowContext` rules, e.g, restricting the access based on `site.controller`, `site.database`, or any other available context property.
 
 **File to include:** 
 
 ```json
 {
-    "include": "includes/base/objets/roles/rest-api/v0"
+    "include": "includes/base/objects/roles/rest-api/v0"
 }
 ```
 
