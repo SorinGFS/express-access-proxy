@@ -147,7 +147,7 @@
                     "action": "indexes"
                 },
                 "api": {
-                    "method": "indexes"
+                    "method": "listIndexes"
                 }
             },
             {
@@ -176,7 +176,7 @@
                     "action": "count"
                 },
                 "api": {
-                    "method": "countDocuments",
+                    "method": "count",
                     "arguments": ["site.filter", "site.options"]
                 }
             },
