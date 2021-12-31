@@ -7,7 +7,7 @@
             { "include": "includes/base/properties/methods/model/insertOne" },
             { "include": "includes/base/properties/methods/model/updateOne" },
             { "include": "includes/base/properties/methods/model/listIndexes" },
-            { "include": "includes/base/properties/methods/model/validation" }
+            { "include": "includes/base/properties/methods/model/getValidation" }
         ]
     }
 ]

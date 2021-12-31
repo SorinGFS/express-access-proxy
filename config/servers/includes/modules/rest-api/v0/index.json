@@ -127,6 +127,7 @@
                     "action": "validation"
                 },
                 "api": {
+                    "method": "returnArg",
                     "arguments": ["site.validation"]
                 }
             },
