@@ -4,3 +4,4 @@
 
 #### Content
 - [Roles](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/includes/base/objects/roles)
+- [Routers](https://github.com/SorinGFS/express-access-proxy/blob/master/config/servers/includes/base/objects/routers)
