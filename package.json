@@ -20,7 +20,7 @@
     "license": "MIT",
     "dependencies": {
         "dotenv": "^8.2.0",
-        "express": "4.17.1",
+        "express": "4.17.2",
         "express-access-proxy-actions": "1.6.0",
         "express-access-proxy-base": "1.6.0",
         "express-access-proxy-middlewares": "1.6.0",
