@@ -19,7 +19,7 @@ Express Access Proxy itself is just a transparent proxy. Install it first:
 
 ```shell
 cd /path/to/desired/location
-git clone https://github.com/SorinGFS/express-access-proxy.git 
+git clone https://github.com/SorinGFS/express-access-proxy.git
 cd express-access-proxy
 npm install
 ```
@@ -53,10 +53,48 @@ To start the app in `production` environment configure the downstream server to 
 npm run start
 ```
 
+#### Controlling the application using pm2
+
+The file `pm2.config.json` is the ecosystem file for `pm2`. Details about using `pm2` may be found in [official documentation](https://pm2.keymetrics.io/docs/usage/application-declaration/).
+
+Both `production` and `development` environments are configured in ecosystem file, and by default `development` environment is set to watch for changes. If no start arguments are provided both environments are started. In order to start a single environment the syntax is like following:
+
+**to start app in production environment:**
+```shell
+pm2 start path/to/pm2.config.json --only proxy
+```
+
+**to start app in development environment:**
+```shell
+pm2 start path/to/pm2.config.json --only proxy-dev
+```
+
 ### Configuration
 
-The application is designed in a maximum flexible way and allows granular control by configuring each module separately on each server and on each route. Initially the application offers out of the box functionality by forwarding requests received on `localhost:3002` (or `localhost:7331` for `production` environment) to `localhost:1337`. The purpose for this behaviour is to help the user to adapt and to understand how to configure the application for their own needs. 
+The application is designed in a maximum flexible way and allows granular control by configuring each module separately on each server and on each route. Initially the application offers out of the box functionality by forwarding requests received on `localhost:3002` (or `localhost:7331` for `production` environment) to `localhost:1337`. The purpose for this behaviour is to help the user to adapt and to understand how to configure the application for their own needs.
 **Important:** This application should only run behind a downstream server, there is no SSL/TLS support for now, therefore the communication between downstream server and this application is made in plain text. **So it can be used only when there is control and trust in the host machine!** Moreover, a downstream server like Nginx not only solves much of the http related security issues much faster but is also needed to direct requests to this application. Stil, this application can use existing SSL certificates to encrypt JWT authentication tokens and hopefully in the not too distant future will be able to secure traffic to the downstream server.
+
+#### Downstream configuration
+
+In order to be able to configure multiple servers on this application is neccesary to reset downstream `host` with the same value as the original `server_name` hosted downstream. 
+
+**File:** /etc/nginx/sites-available/my-config.conf
+
+```shell
+server {
+    server_name www.example.com;
+    # ...
+    # proxy pass everything to the application, or choose the desired route(s)
+    location / {
+        # proxy pass for development mode, for production change the port
+        proxy_pass http://localhost:3002;
+        # pass to the application the same hostname which is served to nginx
+        # the hostname choosen here must be the one set in the application's server config
+        proxy_set_header Host www.example.com;
+        # various other required directives
+    }
+}
+```
 
 #### Configuration Steps
 
@@ -103,7 +141,8 @@ The application is designed in a maximum flexible way and allows granular contro
 **Note:** the server has built-in `urlRewrite`, direct db access, JWT support, dynamically added app and route settings and `RegExp` based route selector.
 
 **Important:** Some modules are built-in or work only in a certain environment. For the rest of them there is one rule:
-- **if is not configured it doesn't run!**
+
+-   **if is not configured it doesn't run!**
 
 ### Examples and Presets
 
@@ -111,10 +150,10 @@ A growing list of reusable settings and examples can be found in [config/servers
 
 ### Todo next (in order of priority):
 
-- Add upstream support
-- Add local authentication
-- Add web admin interface
-- SSL support to access apps located on the web.
+-   Add upstream support
+-   Add local authentication
+-   Add web admin interface
+-   SSL support to access apps located on the web.
 
 ### Disclaimer
 
